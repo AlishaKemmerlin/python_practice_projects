@@ -3,6 +3,12 @@
 # It prints the menu, shows each person's order with item names,
 # calculates each person's total, and shows the split cost for everyone.
 
+# Introduced a pure function to simplify and reuse the total calculation.
+def calculate_order_total(menu, order_list):
+    """Given the menu and a list of ordered items, return the total cost"""
+    order_total = sum(menu[item] for item in order_list)
+    return order_total
+
 # Set up the menu and prices
 menu = {
     "wings" : 6.99,
@@ -30,15 +36,16 @@ print(
 )
 
 # Calculate and print each person's total cost
-alishas_total = sum(menu[item] for item in alishas_order)
-print(f"\nAlisha's order cost: ${round(alishas_total, 2)}")
+alishas_total = calculate_order_total(menu, alishas_order)
+print(f"\nAlisha's order cost: ${alishas_total:.2f}")
 
-rickys_total = sum(menu[item] for item in rickys_order)
-print(f"Ricky's order cost: ${round(rickys_total, 2)}")
+rickys_total = calculate_order_total(menu, rickys_order)
+print(f"Ricky's order cost: ${rickys_total:.2f}")
 
-xaviers_total = sum(menu[item] for item in xaviers_order)
-print(f"Xavier's order cost: ${round(xaviers_total, 2)}")
+xaviers_total = calculate_order_total(menu, xaviers_order)
+print(f"Xavier's order cost: ${xaviers_total:.2f}")
 
 # Calculate and print the amount each person should pay when splitting the total
-split_total = round((alishas_total + xaviers_total + rickys_total) / 3, 2)
-print(f"\nEveryone pays ${split_total}")
+totals = [alishas_total, rickys_total, xaviers_total]
+split_total = round(sum(totals) / len(totals), 2)
+print(f"\nEveryone pays ${split_total:.2f}")
